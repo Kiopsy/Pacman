@@ -9,6 +9,7 @@ tf.disable_v2_behavior()
 
 class DQN:
     def __init__(self, params):
+        tf.keras.backend.clear_session()
         self.params = params
         self.network_name = 'qnet'
         self.sess = tf.Session()

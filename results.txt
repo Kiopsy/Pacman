@@ -1,0 +1,78 @@
+ ################# RESULTS ###################
+        # ---------- smallGrid ---------- #
+    # 1. Control: smallGrid 100k directional w/ 1 ghost
+    # Win Rate:      723/1000 (0.72)
+    # Average Score:  221.75
+
+    # 2. Random
+        #   a. performance on random
+        
+        # Win Rate:      865/1000 (0.86)
+        # Average Score:    365.063  
+
+        #   b. retesting on control environment
+
+        # Win Rate:      741/1000 (0.74) 
+        # Average Score:    239.464  
+    
+    # 3. Half-and-Half
+        #   a. performance on half/half
+        
+        # Win Rate:      844/1000 (0.84)   
+        # Average Score:    343.748
+
+        #   b. retesting on control environment
+
+        # Win Rate:      750/1000 (0.75)    
+        # Average Score:    248.965
+
+    # 4. More pebbles
+        #   a. performance w/ more pebbles
+        
+        # Win Rate:      49/1000 (0.05)    
+        # Average Score:   -407.243  
+
+        #   b. retesting on control environment
+
+        # Win Rate:      758/1000 (0.76)   
+        # Average Score:    256.757
+    
+
+
+        # --------- smallClassic --------- #
+    # 1. Control: smallClassic 100k directional w/ 2 ghosts
+    # Win Rate:    216/1000 (0.22)
+    # Average Score:  409.535
+
+    # 2. Random
+        #   a. performance on random
+        
+        # Win Rate:      611/1000 (0.61)   
+        # Average Score:    905.396  
+
+        #   b. retesting on control environment
+
+        # Win Rate:      136/1000 (0.14)   
+        # Average Score:    302.887
+    
+    # 3. Half-and-Half
+        #   a. performance on half/half
+        
+        # Win Rate:      416/1000 (0.42)  
+        # Average Score:    677.542  
+
+        #   b. retesting on control environment
+
+        # Win Rate:      228/1000 (0.23)    
+        # Average Score:    436.939  
+
+    # 4. Less Ghosts
+        #   a. performance w/ less ghosts
+        
+        # Win Rate:      212/1000 (0.21)   
+        # Average Score:    101.775  
+
+        #   b. retesting on control environment
+
+        # Win Rate:      14/1000 (0.01)   
+        # Average Score:    -79.835  

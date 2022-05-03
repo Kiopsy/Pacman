@@ -39,6 +39,7 @@ code to run a game.  This file is divided into three sections:
 To play your first game, type 'python pacman.py' from the command line.
 The keys are 'a', 's', 'd', and 'w' to move (or arrow keys).  Have fun!
 """
+import statistics
 from game import GameStateData
 from game import Game
 from game import Directions
@@ -55,6 +56,8 @@ import os
 
 import pacmanDQN_Agents
 import ghostAgents
+
+from constants import c
 
 ###################################################
 # YOUR INTERFACE TO THE PACMAN WORLD: A GameState #
@@ -729,6 +732,98 @@ def runGames(layout, pacman, ghosts, display, numGames, record, numTraining=0, c
 
     return games
 
+#-------------- Victor --------------#
+def plot_games(games, games_control, labels):
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    def experiment_statistics(experiments):
+        score_lst = []
+        wins_lst = []
+        food_lst = []
+
+        for games in experiments:
+            # Statistics to track: [score, wins, food_eaten]
+            score = []
+            wins = []
+            food = []
+
+            # total games
+            num_games = len(games)
+
+            # avg score
+            total_score = 0
+
+            # win rate
+            total_wins = 0
+
+            # average percentage of food eaten
+            total_food = 0
+
+            for game in games: 
+                total_score += game.state.data.score
+                total_food += 1 - game.rules.getProgress(game)
+
+                if game.state.isWin():
+                    total_wins += 1
+
+            avg_score = total_score / num_games
+            avg_wins = total_wins / num_games
+            avg_food = total_food / num_games
+
+            score.append(avg_score)
+            wins.append(avg_wins)
+            food.append(avg_food)
+
+            score_lst.extend(score)
+            wins_lst.extend(wins)
+            food_lst.extend(food)
+        
+        return [score_lst, wins_lst, food_lst]
+
+    ylabels = ['Average Score', 'Average Win Rate', 'Average Percentage of Food Eaten']
+    # Statistics to plot:
+    # Performance of experiments in respective environments
+    normal = experiment_statistics(games)
+    # Performance of experiments in control environments
+    control = experiment_statistics(games_control)
+
+    fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(10, 10))
+    for i in range(len(ylabels)):
+        current = axes[i]
+
+        # set width of bars
+        barWidth = 0.25
+        
+        # set heights of bars
+        bars1 = normal[i]
+        bars2 = control[i]
+        
+        bars1[0] = 0
+
+        print(bars1)
+        print(bars2)
+        # Set position of bar on X axis
+        r1 = np.arange(len(bars1))
+        r2 = [x + barWidth for x in r1]
+        r3 = [x + barWidth for x in r2]
+        
+        # Make the plot
+        current.bar(r1, bars1, color='r', width=barWidth, label='Given Task Environment')
+        current.bar(r2, bars2, color='b', width=barWidth, label='Control Task Environment')
+
+        # plt.bar(r3, bars3, color='#r', width=barWidth, edgecolor='white', label='var3')
+        
+        # Add xticks on the middle of the group bars
+        current.set_xlabel('Tasks', fontweight='bold')
+        current.set_ylabel(ylabels[i], fontweight='bold')
+        current.set_xticks([r + barWidth for r in range(len(bars1))], labels)
+        
+        # Create legend & Show graphic
+        current.legend()
+    
+    plt.show()
+
 if __name__ == '__main__':
     """
     The main function called when pacman.py is run
@@ -740,9 +835,67 @@ if __name__ == '__main__':
 
     > python pacman.py --help
     """
+    run_small_grid = 0
+    num_game_sessions = 1
 
-    print(sys.argv[1:])
-    args = readCommand(sys.argv[1:])  # Get game components based on input
-    
-    runGames(**args)
+    total_games = []
+    total_games_control = []
+
+    #-------------- Victor --------------#
+    if run_small_grid:
+
+        ################ SMALL GRID ################## 
+        for i in range(len(c.SMALL_GRID_EXPERIMENTS)):
+            games = []
+            games_control = []
+
+            # Running 3, 1000 game sessions to average results
+            for _ in range(num_game_sessions):
+                # Models against respective environment
+                load_file, argv = c.SMALL_GRID_EXPERIMENTS[i]
+                args = readCommand(argv)
+                args['pacman'].params['load_file'] = c.SMALL_GRID_FOLDER + load_file
+                games.extend(runGames(**args))
+
+                # Models against control environment to measure forgetting
+                load_file, argv = c.SMALL_GRID_EXPERIMENTS_ON_CONTROL[i]
+                args = readCommand(argv)
+                args['pacman'].params['load_file'] = c.SMALL_GRID_FOLDER + load_file
+                games_control.extend(runGames(**args))
+
+            total_games.append(games)
+            total_games_control.append(games_control)
+
+        # Plot levels of forgetting against respective environments
+        plot_games(total_games, total_games_control, ['Control', 'Random', 'Half&Half', 'More Pebbles'])
+    else:
+        
+        ############## SMALL CLASSIC ################ 
+        for i in range(len(c.SMALL_CLASSIC_EXPERIMENTS)):
+            games = []
+            games_control = []
+
+            # Running 3, 1000 game sessions to average results
+            for _ in range(num_game_sessions):
+                print("bing bing bing")
+                # Models against respective environment
+                load_file, argv = c.SMALL_CLASSIC_EXPERIMENTS[i]
+                print('beep')
+                print(argv)
+                args = readCommand(argv)
+                args['pacman'].params['load_file'] = 'C:/Users/vg210/Desktop/PacmanDQN/saves/model-smallClassic_5860553_24626'
+                games.extend(runGames(**args))
+
+                # Models against control environment to measure forgetting
+                load_file, argv = c.SMALL_CLASSIC_EXPERIMENTS_ON_CONTROL[i]
+                args = readCommand(argv)
+                args['pacman'].params['load_file'] = 'C:/Users/vg210/Desktop/PacmanDQN/saves/model-smallClassic_5860553_24626'
+                games_control.extend(runGames(**args))
+
+            total_games.append(games)
+            total_games_control.append(games_control)
+
+        # Plot levels of forgetting against respective environments
+        plot_games(total_games, total_games_control, ['Control', 'Random', 'Half&Half', 'Less Ghosts'])
+
     pass

@@ -1,0 +1,3 @@
+#    1 | steps:    10 | steps_t:     0 | t: 0.015625 | r:  -509.000000 | e:   1.000000 | Q:        nan | won: False 
+#    2 | steps:    18 | steps_t:     0 | t: 1.541732 | r:  -507.000000 | e:   1.000000 | Q:        nan | won: False 
+#    3 | steps:    25 | steps_t:     0 | t: 4.030349 | r:  -506.000000 | e:   1.000000 | Q:        nan | won: False 

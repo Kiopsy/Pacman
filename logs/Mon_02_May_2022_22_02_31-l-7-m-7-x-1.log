@@ -1,0 +1,10 @@
+#    1 | steps:     7 | steps_t:     0 | t: 0.015628 | r:  -506.000000 | e:   1.000000 | Q:        nan | won: False 
+#    2 | steps:    16 | steps_t:     0 | t: 1.787757 | r:  -508.000000 | e:   1.000000 | Q:        nan | won: False 
+#    3 | steps:    25 | steps_t:     0 | t: 4.710138 | r:  -508.000000 | e:   1.000000 | Q:        nan | won: False 
+#    4 | steps:    33 | steps_t:     0 | t: 7.352689 | r:  -507.000000 | e:   1.000000 | Q:        nan | won: False 
+#    5 | steps:    44 | steps_t:     0 | t: 10.621770 | r:  -510.000000 | e:   1.000000 | Q:        nan | won: False 
+#    6 | steps:    51 | steps_t:     0 | t: 13.061784 | r:  -506.000000 | e:   1.000000 | Q:        nan | won: False 
+#    7 | steps:    60 | steps_t:     0 | t: 15.909447 | r:  -508.000000 | e:   1.000000 | Q:        nan | won: False 
+#    8 | steps:    72 | steps_t:     0 | t: 19.401082 | r:  -511.000000 | e:   1.000000 | Q:        nan | won: False 
+#    9 | steps:    80 | steps_t:     0 | t: 22.099117 | r:  -507.000000 | e:   1.000000 | Q:        nan | won: False 
+#   10 | steps:    92 | steps_t:     0 | t: 25.946585 | r:  -511.000000 | e:   1.000000 | Q:        nan | won: False 

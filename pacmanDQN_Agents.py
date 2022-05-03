@@ -29,117 +29,9 @@ from DQN import *
 
 params = {
     # Model backups
- 
-    'load_file': None,
-    # 'load_file': 'C:/Users/GoncalvesVictorEduar/Desktop/Pacman/saves/model-smallClassic_4115746_20159',
-
-    ################ SMALL GRID ################## 
-    # Control: 100k smallGrid DirectionalGhost 
-    # 'load_file': 'C:/Users/GoncalvesVictorEduar/Desktop/Pacman/saves/250000 iterations on small Grid/model-smallGrid_2735611_100878',
-   
-    # Random: 100k smallGrid + 30k RandomGhost
-    # 'load_file': 'C:/Users/GoncalvesVictorEduar/Desktop/Pacman/saves/smallGrid100k directional + 30k random ghost/model-smallClassic_3270774_30084',
-
-    # Half-and-Half: 100k smallGrid + 30k half/half
-    # 'load_file': 'C:/Users/GoncalvesVictorEduar/Desktop/Pacman/saves/smallGrid 100k directional + 30k half and half/model-smallClassic_3271349_29522',
-
-    ############## SMALL CLASSIC ################ 
-    # Control: 100k smallClassic DirectionalGhost
-    # 'load_file': 'C:/Users/GoncalvesVictorEduar/Desktop/Pacman/saves/smallClassic 75405 + 80k/model-smallClassic_5860553_24626',
-
-    # Random: 100k smallClassic + 30k RandomGhost
-    # 'load_file': 'C:/Users/GoncalvesVictorEduar/Desktop/Pacman/saves/smallClassic 100k directional + 30k random/model-smallClassic_8698647_26605',
-
-    # Half-and-Half: 100k smallClassic + 30k half/half
-    # 'load_file': 'C:/Users/GoncalvesVictorEduar/Desktop/Pacman/saves/smallClassic 100k directional + 30k half and half/model-smallClassic_8195775_29837',
-
-    # Less Ghosts: 100k smallClassic + 30k less ghosts
-    # 'load_file': 'C:/Users/GoncalvesVictorEduar/Desktop/Pacman/saves/smallClassic 100k directional + 30k one ghost/model-smallClassic_7455700_29929',
-
-    ################# RESULTS ###################
-        # ---------- smallGrid ---------- #
-    # 1. Control: smallGrid 100k directional w/ 1 ghost
-    # Win Rate:      723/1000 (0.72)
-    # Average Score:  221.75
-
-    # 2. R
-    # andom
-        #   a. performance on random
-        
-        # Win Rate:      865/1000 (0.86)
-        # Average Score:    365.063  
-
-        #   b. retesting on control environment
-
-        # Win Rate:      741/1000 (0.74) 
-        # Average Score:    239.464  
-    
-    # 3. Half-and-Half
-        #   a. performance on half/half
-        
-        # Win Rate:      844/1000 (0.84)   
-        # Average Score:    343.748
-
-        #   b. retesting on control environment
-
-        # Win Rate:      750/1000 (0.75)    
-        # Average Score:    248.965
-
-    # 4. More pebbles
-        #   a. performance w/ more pebbles
-        
-        # Win Rate:      49/1000 (0.05)    
-        # Average Score:   -407.243  
-
-        #   b. retesting on control environment
-
-        # Win Rate:      758/1000 (0.76)   
-        # Average Score:    256.757
-    
-
-
-        # --------- smallClassic --------- #
-    # 1. Control: smallClassic 100k directional w/ 2 ghosts
-    # Win Rate:    216/1000 (0.22)
-    # Average Score:  409.535
-
-    # 2. Random
-        #   a. performance on random
-        
-        # Win Rate:      611/1000 (0.61)   
-        # Average Score:    905.396  
-
-        #   b. retesting on control environment
-
-        # Win Rate:      136/1000 (0.14)   
-        # Average Score:    302.887
-    
-    # 3. Half-and-Half
-        #   a. performance on half/half
-        
-        # Win Rate:      416/1000 (0.42)  
-        # Average Score:    677.542  
-
-        #   b. retesting on control environment
-
-        # Win Rate:      228/1000 (0.23)    
-        # Average Score:    436.939  
-
-    # 4. Less Ghosts
-        #   a. performance w/ less ghosts
-        
-        # Win Rate:      212/1000 (0.21)   
-        # Average Score:    101.775  
-
-        #   b. retesting on control environment
-
-        # Win Rate:      14/1000 (0.01)   
-        # Average Score:    -79.835  
-
-    'save_file': 'smallClassic',
-    # 'save_file': None,
+    'load_file': 'C:/Users/vg210/Desktop/PacmanDQN/saves/model-smallGrid_2735611_100878',
+    'save_file': None,
     'save_interval' : 10000, 
-    
 
     # Training parameters
     'train_start': 5000,    # Episodes before training starts
@@ -147,7 +39,7 @@ params = {
     'mem_size': 100000,     # Replay memory size
 
     'discount': 0.95,       # Discount rate (gamma value)
-    'lr': .0002,            # Learning rate
+    'lr': .0002,            # Learning reate
     # 'rms_decay': 0.99,      # RMS Prop decay (switched to adam)
     # 'rms_eps': 1e-6,        # RMS Prop epsilon (switched to adam)
 
@@ -169,6 +61,7 @@ class PacmanDQN(game.Agent):
         self.params['num_training'] = args['numTraining']
 
         # Start Tensorflow session
+        tf.keras.backend.clear_session()
         gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.1)
         self.sess = tf.Session(config = tf.ConfigProto(gpu_options = gpu_options))
         self.qnet = DQN(self.params)
@@ -315,7 +208,7 @@ class PacmanDQN(game.Agent):
                          (self.numeps,self.local_cnt, self.cnt, time.time()-self.s, self.ep_rew, self.params['eps']))
         sys.stdout.write("| Q: %10f | won: %r \n" % ((max(self.Q_global, default=float('nan')), self.won)))
         sys.stdout.flush()
-        
+
     def train(self):
         # Train
         if (self.local_cnt > self.params['train_start']):
