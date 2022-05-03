@@ -733,7 +733,7 @@ def runGames(layout, pacman, ghosts, display, numGames, record, numTraining=0, c
     return games
 
 #-------------- Victor --------------#
-def plot_games(games, games_control, labels):
+def plot_games(games, games_control, labels, title):
     import numpy as np
     import matplotlib.pyplot as plt
 
@@ -748,16 +748,9 @@ def plot_games(games, games_control, labels):
             wins = []
             food = []
 
-            # total games
             num_games = len(games)
-
-            # avg score
             total_score = 0
-
-            # win rate
             total_wins = 0
-
-            # average percentage of food eaten
             total_food = 0
 
             for game in games: 
@@ -801,8 +794,6 @@ def plot_games(games, games_control, labels):
         
         bars1[0] = 0
 
-        print(bars1)
-        print(bars2)
         # Set position of bar on X axis
         r1 = np.arange(len(bars1))
         r2 = [x + barWidth for x in r1]
@@ -812,8 +803,6 @@ def plot_games(games, games_control, labels):
         current.bar(r1, bars1, color='r', width=barWidth, label='Given Task Environment')
         current.bar(r2, bars2, color='b', width=barWidth, label='Control Task Environment')
 
-        # plt.bar(r3, bars3, color='#r', width=barWidth, edgecolor='white', label='var3')
-        
         # Add xticks on the middle of the group bars
         current.set_xlabel('Tasks', fontweight='bold')
         current.set_ylabel(ylabels[i], fontweight='bold')
@@ -821,7 +810,8 @@ def plot_games(games, games_control, labels):
         
         # Create legend & Show graphic
         current.legend()
-    
+        
+    plt.suptitle(title)
     plt.show()
 
 if __name__ == '__main__':
@@ -843,8 +833,7 @@ if __name__ == '__main__':
 
     #-------------- Victor --------------#
     if run_small_grid:
-
-        ################ SMALL GRID ################## 
+        ############### SMALL GRID ################## 
         for i in range(len(c.SMALL_GRID_EXPERIMENTS)):
             games = []
             games_control = []
@@ -867,9 +856,9 @@ if __name__ == '__main__':
             total_games_control.append(games_control)
 
         # Plot levels of forgetting against respective environments
-        plot_games(total_games, total_games_control, ['Control', 'Random', 'Half&Half', 'More Pebbles'])
-    else:
-        
+        plot_games(total_games, total_games_control, ['Control', 'Random', 'Half&Half', 'More Pebbles'], 'smallGrid')
+    
+    else:    
         ############## SMALL CLASSIC ################ 
         for i in range(len(c.SMALL_CLASSIC_EXPERIMENTS)):
             games = []
@@ -877,25 +866,20 @@ if __name__ == '__main__':
 
             # Running 3, 1000 game sessions to average results
             for _ in range(num_game_sessions):
-                print("bing bing bing")
                 # Models against respective environment
                 load_file, argv = c.SMALL_CLASSIC_EXPERIMENTS[i]
-                print('beep')
-                print(argv)
                 args = readCommand(argv)
-                args['pacman'].params['load_file'] = 'C:/Users/vg210/Desktop/PacmanDQN/saves/model-smallClassic_5860553_24626'
+                args['pacman'].params['load_file'] = c.SMALL_CLASSIC_FOLDER + load_file
                 games.extend(runGames(**args))
 
                 # Models against control environment to measure forgetting
                 load_file, argv = c.SMALL_CLASSIC_EXPERIMENTS_ON_CONTROL[i]
                 args = readCommand(argv)
-                args['pacman'].params['load_file'] = 'C:/Users/vg210/Desktop/PacmanDQN/saves/model-smallClassic_5860553_24626'
+                args['pacman'].params['load_file'] = c.SMALL_CLASSIC_FOLDER + load_file
                 games_control.extend(runGames(**args))
 
             total_games.append(games)
             total_games_control.append(games_control)
 
         # Plot levels of forgetting against respective environments
-        plot_games(total_games, total_games_control, ['Control', 'Random', 'Half&Half', 'Less Ghosts'])
-
-    pass
+        plot_games(total_games, total_games_control, ['Control', 'Random', 'Half&Half', 'Less Ghosts'], 'smallClassic')

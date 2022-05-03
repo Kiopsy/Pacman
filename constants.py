@@ -1,20 +1,13 @@
 #-------------- Victor --------------#
 class c:
-    # Different Experiments
-    DIRECTIONAL = 1
-    RANDOM = 2
-    HALF_HALF = 3
-    ONE_GHOST = 4
-    MORE_PEBBLES = 5
-
     # Args to test w/out graphics and for 1000 games
-    ARGS = ['-p', 'PacmanDQN', '-n', '10', '-x', '1', '-q']
+    ARGS = ['-p', 'PacmanDQN', '-n', '1001', '-x', '1', '-q']
 
     # directory/file locations
     
     ############## SMALL CLASSIC ################ 
-    # SMALL_CLASSIC_FOLDER = 'C:/Users/GoncalvesVictorEduar/Desktop/Pacman/saves/smallClassic/'
-    SMALL_CLASSIC_FOLDER = 'C:/Users/vg210/Desktop/Pacman/saves/smallClassic/'
+    SMALL_CLASSIC_FOLDER = 'C:/Users/GoncalvesVictorEduar/Desktop/Pacman/saves/smallClassic/'
+    # SMALL_CLASSIC_FOLDER = 'C:/Users/vg210/Desktop/Pacman/saves/smallClassic/'
 
     # Control: 100k smallClassic DirectionalGhost
     SMALL_CLASSIC_DIRECTIONAL = 'model-smallClassic_5860553_24626'
@@ -43,8 +36,8 @@ class c:
                                  (SMALL_CLASSIC_ONE_GHOST, ARGS + ['-g', 'DirectionalGhost', '-l', 'smallClassic'])]
 
     ################ SMALL GRID ################## 
-    # SMALL_GRID_FOLDER = 'C:/Users/GoncalvesVictorEduar/Desktop/Pacman/saves/smallGrid/'
-    SMALL_GRID_FOLDER = 'C:/Users/vg210/Desktop/Pacman/saves/smallGrid/'
+    SMALL_GRID_FOLDER = 'C:/Users/GoncalvesVictorEduar/Desktop/Pacman/saves/smallGrid/'
+    # SMALL_GRID_FOLDER = 'C:/Users/vg210/Desktop/Pacman/saves/smallGrid/'
 
     # Control: 100k smallGrid DirectionalGhost 
     SMALL_GRID_DIRECTIONAL = 'model-smallGrid_2735611_100878'

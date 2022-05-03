@@ -29,7 +29,7 @@ from DQN import *
 
 params = {
     # Model backups
-    'load_file': 'C:/Users/vg210/Desktop/PacmanDQN/saves/model-smallGrid_2735611_100878',
+    'load_file': None,
     'save_file': None,
     'save_interval' : 10000, 
 
